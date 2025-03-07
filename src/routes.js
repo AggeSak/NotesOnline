@@ -2,18 +2,13 @@ const express = require('express');
 const router = express.Router();
 const exampleController = require('./controllers/exampleController');
 
-// Example route
-router.get('/example', exampleController.getExample);
-
-// Test database connection
-router.get('/test-db', exampleController.testDatabase);
-
 // User routes
-router.post('/users', exampleController.createUser);
-router.get('/users', exampleController.getUsers);
+router.post('/users', exampleController.createUser); // Sign up
+router.post('/login', exampleController.loginUser); // Login
+router.get('/users', exampleController.getUsers); // Get all users
 
 // Note routes
-router.post('/notes', exampleController.createNote);
-router.get('/notes/:user_id', exampleController.getNotesByUser);
+router.post('/notes', exampleController.createNote); // Create a new note
+router.get('/notes', exampleController.getNotesByUser); // Get notes for logged-in user
 
 module.exports = router;

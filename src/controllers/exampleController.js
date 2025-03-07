@@ -1,54 +1,62 @@
 const client = require('../db');
+const jwt = require('jsonwebtoken');
+const bcrypt = require('bcrypt');
 
-// Example route handler
-const getExample = (req, res) => {
-    res.json({ message: 'This is an example response' });
-};
+// JWT secret
+const JWT_SECRET = process.env.JWT_SECRET || 'your-secret-key';
 
-// Test database connection
-const testDatabase = async (req, res) => {
-    try {
-        const result = await client.query('SELECT NOW() AS current_time');
-        res.json({ message: 'Database connection successful', time: result.rows[0].current_time });
-    } catch (err) {
-        console.error('Database connection error:', err);
-        res.status(500).json({ error: 'Failed to connect to the database' });
-    }
-};
-
-// Create a new user
+// Create a new user (Sign Up)
 const createUser = async (req, res) => {
     const { name, email, password } = req.body;
 
     try {
+        // Hash the password before saving to the DB
+        const hashedPassword = await bcrypt.hash(password, 10);
+        
         const result = await client.query(
             'INSERT INTO users (name, email, password) VALUES ($1, $2, $3) RETURNING *',
-            [name, email, password]
+            [name, email, hashedPassword]
         );
-        res.status(201).json(result.rows[0]);
+
+        // Generate a JWT token
+        const token = jwt.sign({ userId: result.rows[0].id }, JWT_SECRET, { expiresIn: '1h' });
+
+        res.status(201).json({ token, user: result.rows[0] });
     } catch (err) {
         console.error('Error creating user:', err);
         res.status(500).json({ error: 'Failed to create user' });
     }
 };
 
-// Create a new note
-const createNote = async (req, res) => {
-    const { user_id, title, content } = req.body;
+// Login User
+const loginUser = async (req, res) => {
+    const { email, password } = req.body;
 
     try {
-        const result = await client.query(
-            'INSERT INTO notes (user_id, title, content) VALUES ($1, $2, $3) RETURNING *',
-            [user_id, title, content]
-        );
-        res.status(201).json(result.rows[0]);
+        const result = await client.query('SELECT * FROM users WHERE email = $1', [email]);
+
+        if (result.rows.length === 0) {
+            return res.status(401).json({ error: 'Invalid email or password' });
+        }
+
+        // Compare password with hashed password in DB
+        const isPasswordValid = await bcrypt.compare(password, result.rows[0].password);
+
+        if (!isPasswordValid) {
+            return res.status(401).json({ error: 'Invalid email or password' });
+        }
+
+        // Generate a JWT token
+        const token = jwt.sign({ userId: result.rows[0].id }, JWT_SECRET, { expiresIn: '1h' });
+
+        res.status(200).json({ token, user: result.rows[0] });
     } catch (err) {
-        console.error('Error creating note:', err);
-        res.status(500).json({ error: 'Failed to create note' });
+        console.error('Error logging in user:', err);
+        res.status(500).json({ error: 'Failed to log in user' });
     }
 };
 
-// Get all users
+// Get all users (For debugging/testing purposes)
 const getUsers = async (req, res) => {
     try {
         const result = await client.query('SELECT * FROM users');
@@ -59,12 +67,46 @@ const getUsers = async (req, res) => {
     }
 };
 
-// Get all notes for a user
-const getNotesByUser = async (req, res) => {
-    const { user_id } = req.params;
+// Create a new note (only accessible if user is authenticated)
+const createNote = async (req, res) => {
+    const { title, content } = req.body;
+    const token = req.headers['authorization']?.split(' ')[1];
+
+    if (!token) {
+        return res.status(401).json({ error: 'Authorization required' });
+    }
 
     try {
-        const result = await client.query('SELECT * FROM notes WHERE user_id = $1', [user_id]);
+        // Verify the JWT token
+        const decoded = jwt.verify(token, JWT_SECRET);
+        const userId = decoded.userId;
+
+        const result = await client.query(
+            'INSERT INTO notes (user_id, title, content) VALUES ($1, $2, $3) RETURNING *',
+            [userId, title, content]
+        );
+
+        res.status(201).json(result.rows[0]);
+    } catch (err) {
+        console.error('Error creating note:', err);
+        res.status(500).json({ error: 'Failed to create note' });
+    }
+};
+
+// Get all notes for the logged-in user
+const getNotesByUser = async (req, res) => {
+    const token = req.headers['authorization']?.split(' ')[1];
+
+    if (!token) {
+        return res.status(401).json({ error: 'Authorization required' });
+    }
+
+    try {
+        // Verify the JWT token
+        const decoded = jwt.verify(token, JWT_SECRET);
+        const userId = decoded.userId;
+
+        const result = await client.query('SELECT * FROM notes WHERE user_id = $1', [userId]);
         res.status(200).json(result.rows);
     } catch (err) {
         console.error('Error fetching notes:', err);
@@ -73,10 +115,9 @@ const getNotesByUser = async (req, res) => {
 };
 
 module.exports = {
-    getExample,
-    testDatabase,
     createUser,
-    createNote,
+    loginUser,
     getUsers,
-    getNotesByUser,
+    createNote,
+    getNotesByUser
 };

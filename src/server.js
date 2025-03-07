@@ -2,26 +2,23 @@ const express = require('express');
 const path = require('path');
 const bodyParser = require('body-parser');
 const cors = require('cors');
+const jwt = require('jsonwebtoken');
 const routes = require('./routes');
+const client = require('./db'); // Assuming this is where the DB connection is handled
+require('dotenv').config();
 
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-const cors = require('cors');
-
+// CORS configuration
 app.use(cors({
     origin: 'https://notesonline-1.onrender.com', // Replace with your frontend URL
     methods: ['GET', 'POST', 'PUT', 'DELETE'],
     allowedHeaders: ['Content-Type', 'Authorization']
 }));
 
-
-
 // Middleware
 app.use(bodyParser.json());
-
-// Serve static files from the frontend folder
-app.use(express.static(path.join(__dirname, '../frontend')));
 
 // Routes
 app.use('/api', routes);
