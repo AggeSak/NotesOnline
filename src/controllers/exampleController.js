@@ -10,18 +10,23 @@ const createUser = async (req, res) => {
     const { name, email, password } = req.body;
 
     try {
+        const result = await client.query('SELECT * FROM users WHERE email = $1', [email]);
+        if (result.rows.length > 0) {
+            return res.status(400).json({ error: 'Email already exists' });
+        }
+
         // Hash the password before saving to the DB
         const hashedPassword = await bcrypt.hash(password, 10);
-        
-        const result = await client.query(
+
+        const newUserResult = await client.query(
             'INSERT INTO users (name, email, password) VALUES ($1, $2, $3) RETURNING *',
             [name, email, hashedPassword]
         );
 
         // Generate a JWT token
-        const token = jwt.sign({ userId: result.rows[0].id }, JWT_SECRET, { expiresIn: '1h' });
+        const token = jwt.sign({ userId: newUserResult.rows[0].id }, JWT_SECRET, { expiresIn: '1h' });
 
-        res.status(201).json({ token, user: result.rows[0] });
+        res.status(201).json({ token, user: newUserResult.rows[0] });
     } catch (err) {
         console.error('Error creating user:', err);
         res.status(500).json({ error: 'Failed to create user' });
