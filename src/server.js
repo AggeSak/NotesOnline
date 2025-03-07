@@ -7,8 +7,14 @@ const routes = require('./routes');
 const app = express();
 const PORT = process.env.PORT || 3000;
 
+// CORS configuration
+app.use(cors({
+    origin: 'https://notesonline-1.onrender.com', // Replace with your frontend URL
+    methods: ['GET', 'POST'],
+    allowedHeaders: ['Content-Type'],
+}));
+
 // Middleware
-app.use(cors());
 app.use(bodyParser.json());
 
 // Serve static files from the frontend folder
