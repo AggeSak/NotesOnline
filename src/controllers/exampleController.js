@@ -36,30 +36,24 @@ const createUser = async (req, res) => {
 // Login User
 const loginUser = async (req, res) => {
     const { email, password } = req.body;
-
     try {
         const result = await client.query('SELECT * FROM users WHERE email = $1', [email]);
-
         if (result.rows.length === 0) {
             return res.status(401).json({ error: 'Invalid email or password' });
         }
-
-        // Compare password with hashed password in DB
         const isPasswordValid = await bcrypt.compare(password, result.rows[0].password);
-
         if (!isPasswordValid) {
             return res.status(401).json({ error: 'Invalid email or password' });
         }
 
-        // Generate a JWT token
         const token = jwt.sign({ userId: result.rows[0].id }, JWT_SECRET, { expiresIn: '1h' });
-
-        res.status(200).json({ token, user: result.rows[0] });
+        return res.status(200).json({ token, user: result.rows[0] });
     } catch (err) {
-        console.error('Error logging in user:', err);
+        console.error('Error logging in:', err);
         res.status(500).json({ error: 'Failed to log in user' });
     }
 };
+
 
 // Get all users (For debugging/testing purposes)
 const getUsers = async (req, res) => {
