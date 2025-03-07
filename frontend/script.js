@@ -9,12 +9,14 @@ async function fetchUsers() {
 }
 
 // Fetch and display notes for a user
+// Fetch and display notes for a user
 async function fetchNotes(userId) {
     const response = await fetch(`${API_BASE_URL}/api/notes/${userId}`);
     const notes = await response.json();
     const notesList = document.getElementById('notesList');
     notesList.innerHTML = notes.map(note => `<li>${note.title}: ${note.content}</li>`).join('');
 }
+
 
 // Create a new user
 document.getElementById('createUserForm').addEventListener('submit', async (e) => {
