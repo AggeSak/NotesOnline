@@ -7,12 +7,15 @@ const routes = require('./routes');
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-// CORS configuration
+const cors = require('cors');
+
 app.use(cors({
     origin: 'https://notesonline-1.onrender.com', // Replace with your frontend URL
-    methods: ['GET', 'POST'],
-    allowedHeaders: ['Content-Type'],
+    methods: ['GET', 'POST', 'PUT', 'DELETE'],
+    allowedHeaders: ['Content-Type', 'Authorization']
 }));
+
+
 
 // Middleware
 app.use(bodyParser.json());
