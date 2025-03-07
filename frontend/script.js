@@ -2,7 +2,7 @@ const API_BASE_URL = 'https://notesonline-c91q.onrender.com'; // Replace with yo
 
 // Fetch and display users
 async function fetchUsers() {
-    const response = await fetch(`${API_BASE_URL}/users`);
+    const response = await fetch(`${API_BASE_URL}/api/users`);
     const users = await response.json();
     const usersList = document.getElementById('usersList');
     usersList.innerHTML = users.map(user => `<li>${user.name} (${user.email})</li>`).join('');
