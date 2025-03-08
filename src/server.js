@@ -139,6 +139,3 @@ app.listen(PORT, '0.0.0.0', () => {
     console.log(`Server is running on port ${PORT}`);
 });
 
-// Add these timeouts to your server
-app.server.keepAliveTimeout = 120000;  // 120 seconds
-app.server.headersTimeout = 120000;   // 120 seconds
