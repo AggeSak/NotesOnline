@@ -16,6 +16,11 @@ app.use(express.json());
 // Enable CORS for all origins (you can specify your frontend URL here if needed)
 app.use(cors());
 
+app.get('/', (req, res) => {
+    res.send('Welcome to the Notes App API!');
+});
+
+
 // Create a new user (Sign Up)
 const createUser = async (req, res) => {
     const { name, email, password } = req.body;
