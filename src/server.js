@@ -23,6 +23,8 @@ app.use(express.static(path.join(__dirname, '../frontend')));
 // Routes
 app.use('/api', routes);
 
+// Catch-all route handler
+
 // Start the server
 app.listen(PORT, () => {
     console.log(`Server is running on http://localhost:${PORT}`);
