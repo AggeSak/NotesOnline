@@ -133,7 +133,12 @@ app.post('/api/notes', createNote);  // Create a new note (requires authenticati
 app.get('/api/notes', getNotesByUser); // Get notes for logged-in user
 
 // Start the server
-const PORT = process.env.PORT || 5000;
-app.listen(PORT, () => {
+// Inside server.js, update your listen code:
+const PORT = process.env.PORT || 10000;
+app.listen(PORT, '0.0.0.0', () => {
     console.log(`Server is running on port ${PORT}`);
 });
+
+// Add these timeouts to your server
+app.server.keepAliveTimeout = 120000;  // 120 seconds
+app.server.headersTimeout = 120000;   // 120 seconds
