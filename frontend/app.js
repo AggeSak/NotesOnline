@@ -6,10 +6,11 @@ const token = localStorage.getItem('token');
 // Show Notes Page if Logged In (for notes.html)
 if (document.getElementById('notesSection') && token) {
     document.getElementById('loginForm')?.style.display = 'none';  // Safe check
-    document.getElementById('signupForm')?.style.display = 'none';
+    document.getElementById('signupForm')?.style.display = 'none'; // Safe check
     document.getElementById('notesSection').style.display = 'block';
     fetchNotes();
 }
+
 
 // Handle Sign Up (for signup.html)
 if (document.getElementById('signupBtn')) {
