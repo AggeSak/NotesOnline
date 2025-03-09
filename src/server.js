@@ -20,6 +20,12 @@ app.get('/', (req, res) => {
     res.send('Welcome to the Notes App API!');
 });
 
+// Route for the signup page (signup.html)
+app.get('/signup', (req, res) => {
+    res.sendFile(path.join(__dirname, 'public', 'signup.html'));
+});
+
+
 
 // Create a new user (Sign Up)
 const createUser = async (req, res) => {
