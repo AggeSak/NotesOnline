@@ -98,6 +98,6 @@ if (document.getElementById('createNoteForm')) {
 if (document.getElementById('logoutBtn')) {
     document.getElementById('logoutBtn').addEventListener('click', () => {
         localStorage.removeItem('token');
-        window.location.href = 'login.html';  // Redirect to login page
+        window.location.href = 'index.html';  // Redirect to login page
     });
 }
