@@ -9,7 +9,8 @@ const {
     getUsers, 
     createNote, 
     getNotesByUser, 
-    deleteNote 
+    deleteNote,
+    ModifyNote 
 } = require('./controllers/exampleController');  // Ensure correct path
 
 
@@ -39,6 +40,7 @@ app.get('/api/users', getUsers);     // Get users (for testing)
 app.post('/api/notes', createNote);  // Create a new note (requires authentication)
 app.get('/api/notes', getNotesByUser); // Get notes for logged-in user
 app.delete('/api/notes/:id', deleteNote);
+app.put('/api/notes/:id', ModifyNote);
 
 
 

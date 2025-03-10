@@ -153,11 +153,54 @@ const getNotesByUser = async (req, res) => {
     }
 };
 
+// Create a new note (only accessible if user is authenticated)
+const ModifyNote = async (req, res) => {
+    const { id } = req.params; // Get note ID from URL
+    const { title, content } = req.body;
+    const token = req.headers['authorization']?.split(' ')[1];
+
+    if (!token) {
+        return res.status(401).json({ error: 'Authorization required' });
+    }
+
+    try {
+        // Verify the JWT token
+        const decoded = jwt.verify(token, JWT_SECRET);
+        const userId = decoded.userId;
+
+        console.log(`Updating note ID: ${id} for user ID: ${userId}`);
+
+        // Check if the note exists and belongs to the user
+        const note = await client.query(
+            'SELECT * FROM notes WHERE id = $1 AND user_id = $2',
+            [id, userId]
+        );
+
+        if (note.rows.length === 0) {
+            console.log('Note not found or unauthorized');
+            return res.status(404).json({ error: 'Note not found or unauthorized' });
+        }
+
+        // Update the note
+        const result = await client.query(
+            'UPDATE notes SET title = $1, content = $2 WHERE id = $3 RETURNING *',
+            [title, content, id]
+        );
+
+        res.status(200).json(result.rows[0]);
+    } catch (err) {
+        console.error('Error updating note:', err);
+        res.status(500).json({ error: 'Failed to update note' });
+    }
+};
+
+
 module.exports = {
     createUser,
     loginUser,
     getUsers,
     createNote,
     getNotesByUser,
-    deleteNote 
+    deleteNote,
+    ModifyNote 
 };
