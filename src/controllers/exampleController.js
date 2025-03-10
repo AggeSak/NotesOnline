@@ -140,5 +140,6 @@ module.exports = {
     loginUser,
     getUsers,
     createNote,
-    getNotesByUser
+    getNotesByUser,
+    deleteNote 
 };
