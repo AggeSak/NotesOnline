@@ -138,7 +138,7 @@ app.post('/api/login', loginUser);   // Login route
 app.get('/api/users', getUsers);     // Get users (for testing)
 app.post('/api/notes', createNote);  // Create a new note (requires authentication)
 app.get('/api/notes', getNotesByUser); // Get notes for logged-in user
-app.delete('/api/notes/:id', authenticateUser, deleteNote);
+app.delete('/api/notes/:id',deleteNote);
 
 // Start the server
 // Inside server.js, update your listen code:
