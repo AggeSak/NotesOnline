@@ -3,7 +3,15 @@ const cors = require('cors');
 const client = require('./db'); // Assuming you have a db.js file to connect to your DB
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
-const { deleteNote } = require('./src/controllers/exampleController.js'); // Adjust path
+const { 
+    createUser, 
+    loginUser, 
+    getUsers, 
+    createNote, 
+    getNotesByUser, 
+    deleteNote 
+} = require('./controllers/userController');  // Ensure correct path
+
 
 // JWT secret
 const JWT_SECRET = process.env.JWT_SECRET || 'your-secret-key';
