@@ -5,6 +5,28 @@ const bcrypt = require('bcrypt');
 // JWT secret
 const JWT_SECRET = process.env.JWT_SECRET || 'your-secret-key';
 
+
+const deleteNote = async (req, res) => {
+    const { id } = req.params;
+    const user_id = req.userId; // Ensure user owns the note
+
+    try {
+        const note = await client.query('SELECT * FROM notes WHERE id = $1 AND user_id = $2', [id, user_id]);
+
+        if (note.rows.length === 0) {
+            return res.status(404).json({ error: 'Note not found or unauthorized' });
+        }
+
+        await client.query('DELETE FROM notes WHERE id = $1', [id]);
+
+        res.status(200).json({ message: 'Note deleted successfully' });
+    } catch (err) {
+        console.error('Error deleting note:', err);
+        res.status(500).json({ error: 'Failed to delete note' });
+    }
+};
+
+
 // Create a new user (Sign Up)
 const createUser = async (req, res) => {
     const { name, email, password } = req.body;
