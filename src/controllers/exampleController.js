@@ -8,23 +8,41 @@ const JWT_SECRET = process.env.JWT_SECRET || 'your-secret-key';
 
 const deleteNote = async (req, res) => {
     const { id } = req.params;
-    const user_id = req.userId; // Ensure user owns the note
+    const token = req.headers.authorization?.split(" ")[1];
+
+    if (!token) {
+        return res.status(401).json({ error: "Authorization required" });
+    }
 
     try {
-        const note = await client.query('SELECT * FROM notes WHERE id = $1 AND user_id = $2', [id, user_id]);
+        // Verify the JWT token
+        const decoded = jwt.verify(token, JWT_SECRET);
+        const userId = decoded.userId;
+
+        console.log(`Attempting to delete note with ID: ${id} for user ID: ${userId}`);
+
+        // Check if the note exists and belongs to the user
+        const note = await client.query(
+            "SELECT * FROM notes WHERE id = $1 AND user_id = $2",
+            [id, userId]
+        );
 
         if (note.rows.length === 0) {
-            return res.status(404).json({ error: 'Note not found or unauthorized' });
+            console.log("Note not found or unauthorized");
+            return res.status(404).json({ error: "Note not found or unauthorized" });
         }
 
-        await client.query('DELETE FROM notes WHERE id = $1', [id]);
+        // Delete the note
+        await client.query("DELETE FROM notes WHERE id = $1", [id]);
 
-        res.status(200).json({ message: 'Note deleted successfully' });
+        console.log("Note deleted successfully");
+        res.status(200).json({ message: "Note deleted successfully" });
     } catch (err) {
-        console.error('Error deleting note:', err);
-        res.status(500).json({ error: 'Failed to delete note' });
+        console.error("Error deleting note:", err);
+        res.status(500).json({ error: "Failed to delete note" });
     }
 };
+
 
 
 // Create a new user (Sign Up)
