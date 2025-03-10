@@ -25,7 +25,7 @@
             padding: 20px;
         }
 
-        /* Notes Section Container */
+        /* Notes Section */
         #notesSection {
             background: white;
             padding: 2rem;
@@ -34,6 +34,7 @@
             text-align: center;
             max-width: 500px;
             width: 100%;
+            transition: all 0.3s ease-in-out;
         }
 
         /* Heading */
@@ -43,23 +44,69 @@
             font-weight: 600;
         }
 
-        /* Notes List */
+        /* Show Notes Button */
+        #showNotesBtn {
+            background: #48c78e;
+        }
+
+        #showNotesBtn:hover {
+            background: #3aa87c;
+        }
+
+        /* Notes List - Initially Hidden */
         #notesList {
             list-style: none;
             margin: 15px 0;
-            max-height: 200px;
+            max-height: 250px;
             overflow-y: auto;
             padding: 10px;
+            display: none;
         }
 
-        /* Note Items */
-        #notesList li {
-            background: #f4f4f4;
-            padding: 12px;
+        /* Paper-style Notes */
+        .note {
+            background: #fffbeb;
+            padding: 15px;
             margin: 10px 0;
             border-radius: 8px;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            box-shadow: 3px 3px 8px rgba(0, 0, 0, 0.1);
             text-align: left;
+            font-style: italic;
+            position: relative;
+        }
+
+        /* Modify & Delete Buttons */
+        .note-actions {
+            display: flex;
+            justify-content: flex-end;
+            gap: 10px;
+            margin-top: 5px;
+        }
+
+        .edit-btn, .delete-btn {
+            border: none;
+            padding: 5px 10px;
+            font-size: 14px;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+
+        .edit-btn {
+            background: #f7b731;
+            color: white;
+        }
+
+        .edit-btn:hover {
+            background: #e09b2d;
+        }
+
+        .delete-btn {
+            background: #eb4d4b;
+            color: white;
+        }
+
+        .delete-btn:hover {
+            background: #c0392b;
         }
 
         /* Form Inputs */
@@ -71,12 +118,6 @@
             border-radius: 8px;
             font-size: 16px;
             transition: all 0.3s ease-in-out;
-        }
-
-        input:focus, textarea:focus {
-            border-color: #667eea;
-            outline: none;
-            box-shadow: 0 0 8px rgba(102, 126, 234, 0.5);
         }
 
         textarea {
@@ -110,30 +151,26 @@
         #logoutBtn:hover {
             background: #e84150;
         }
-
-        /* Responsive Design */
-        @media (max-width: 480px) {
-            #notesSection {
-                padding: 1.5rem;
-            }
-            h3 {
-                font-size: 20px;
-            }
-            input, textarea, button {
-                font-size: 14px;
-            }
-        }
     </style>
 </head>
 <body>
     <div id="notesSection">
         <h3>Your Notes</h3>
+
+        <!-- Show Notes Button -->
+        <button id="showNotesBtn">Show Old Notes</button>
+
+        <!-- Notes List (Hidden Initially) -->
         <ul id="notesList"></ul>
+
+        <!-- Create Note Form -->
         <form id="createNoteForm">
             <input type="text" id="noteTitle" placeholder="Title" required />
             <textarea id="noteContent" placeholder="Content" required></textarea>
             <button type="submit">Create Note</button>
         </form>
+
+        <!-- Logout Button -->
         <button id="logoutBtn">Logout</button>
     </div>
 

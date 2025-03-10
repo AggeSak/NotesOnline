@@ -1,121 +1,95 @@
 const API_BASE_URL = 'https://notesonline-c91q.onrender.com'; // Your backend URL
 
-// Check if the user is logged in by checking for a token in localStorage
+// Check if the user is logged in
 const token = localStorage.getItem('token');
 
-// 🚀 Prevent unauthorized access to `notes.html`
 if (window.location.pathname.includes('notes.html') && !token) {
-    window.location.href = 'index.html'; // Redirect to login if not logged in
+    window.location.href = 'index.html';
 }
 
-// Show Notes Page if Logged In (for notes.html)
-if (document.getElementById('notesSection')) {
-    if (token) {
-        fetchNotes(); // Load notes if logged in
+// Logout Function
+document.getElementById('logoutBtn').addEventListener('click', () => {
+    localStorage.removeItem('token');
+    window.location.href = 'index.html';
+});
+
+// Show Notes Button
+document.getElementById('showNotesBtn').addEventListener('click', () => {
+    const notesList = document.getElementById('notesList');
+    if (notesList.style.display === 'none' || notesList.style.display === '') {
+        notesList.style.display = 'block'; 
+        fetchNotes();
+        document.getElementById('showNotesBtn').innerText = "Hide Notes";
     } else {
-        window.location.href = 'index.html'; // Redirect to login page if not authenticated
+        notesList.style.display = 'none';
+        document.getElementById('showNotesBtn').innerText = "Show Old Notes";
     }
-}
+});
 
-// Handle Sign Up (for signup.html)
-if (document.getElementById('signupBtn')) {
-    document.getElementById('signupBtn').addEventListener('click', async (e) => {
-        e.preventDefault();
-        const name = document.getElementById('signupName').value;
-        const email = document.getElementById('signupEmail').value;
-        const password = document.getElementById('signupPassword').value;
-
-        const response = await fetch(`${API_BASE_URL}/api/users`, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ name, email, password }),
-        });
-
-        const data = await response.json();
-        if (response.ok) {
-            alert('Sign Up successful!');
-            localStorage.setItem('token', data.token); // Store JWT token
-            window.location.href = 'notes.html'; // Redirect to notes page
-        } else {
-            alert(data.error);
-        }
-    });
-}
-
-// Handle Login (for index.html)
-if (document.getElementById('loginBtn')) {
-    document.getElementById('loginBtn').addEventListener('click', async (e) => {
-        e.preventDefault();
-        const email = document.getElementById('loginEmail').value;
-        const password = document.getElementById('loginPassword').value;
-
-        const response = await fetch(`${API_BASE_URL}/api/login`, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ email, password }),
-        });
-
-        const data = await response.json();
-        if (response.ok) {
-            localStorage.setItem('token', data.token); // Store JWT token
-            window.location.href = 'notes.html'; // Redirect to notes page
-        } else {
-            alert(data.error);
-        }
-    });
-}
-
-// Fetch Notes (for notes.html)
+// Fetch Notes
 async function fetchNotes() {
-    try {
-        const response = await fetch(`${API_BASE_URL}/api/notes`, {
-            method: 'GET',
-            headers: { 'Authorization': `Bearer ${token}` },
+    const response = await fetch(`${API_BASE_URL}/api/notes`, {
+        method: 'GET',
+        headers: { 'Authorization': `Bearer ${token}` },
+    });
+
+    const notes = await response.json();
+    const notesList = document.getElementById('notesList');
+    notesList.innerHTML = '';
+
+    if (notes.length === 0) {
+        notesList.innerHTML = '<li class="note">No notes available.</li>';
+    } else {
+        notes.forEach(note => {
+            const li = document.createElement('li');
+            li.className = "note";
+            li.innerHTML = `
+                <strong>${note.title}</strong><br>${note.content}
+                <div class="note-actions">
+                    <button class="edit-btn" onclick="editNote('${note.id}', '${note.title}', '${note.content}')">✏️ Modify</button>
+                    <button class="delete-btn" onclick="deleteNote('${note.id}')">🗑️ Delete</button>
+                </div>
+            `;
+            notesList.appendChild(li);
         });
-
-        if (!response.ok) throw new Error('Failed to fetch notes');
-
-        const notes = await response.json();
-        const notesList = document.getElementById('notesList');
-        notesList.innerHTML = notes.map(note => `<li>${note.title}: ${note.content}</li>`).join('');
-    } catch (error) {
-        console.error('Error fetching notes:', error);
-        alert('Error fetching notes.');
     }
 }
 
-// Create a Note (for notes.html)
-if (document.getElementById('createNoteForm')) {
-    document.getElementById('createNoteForm').addEventListener('submit', async (e) => {
-        e.preventDefault();
-        const title = document.getElementById('noteTitle').value;
-        const content = document.getElementById('noteContent').value;
+// Create a Note
+document.getElementById('createNoteForm').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const title = document.getElementById('noteTitle').value;
+    const content = document.getElementById('noteContent').value;
 
-        try {
-            const response = await fetch(`${API_BASE_URL}/api/notes`, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${token}`
-                },
-                body: JSON.stringify({ title, content }),
-            });
-
-            if (!response.ok) throw new Error('Failed to create note');
-
-            fetchNotes(); // Refresh notes list
-            document.getElementById('createNoteForm').reset(); // Clear input fields
-        } catch (error) {
-            console.error('Error creating note:', error);
-            alert('Error creating note.');
-        }
+    await fetch(`${API_BASE_URL}/api/notes`, {
+        method: 'POST',
+        headers: { 
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`
+        },
+        body: JSON.stringify({ title, content }),
     });
+
+    document.getElementById('createNoteForm').reset();
+});
+
+// Edit a Note
+function editNote(id, oldTitle, oldContent) {
+    const newTitle = prompt("Modify title:", oldTitle);
+    const newContent = prompt("Modify content:", oldContent);
+    if (newTitle && newContent) {
+        fetch(`${API_BASE_URL}/api/notes/${id}`, {
+            method: 'PUT',
+            headers: { 'Authorization': `Bearer ${token}`, 'Content-Type': 'application/json' },
+            body: JSON.stringify({ title: newTitle, content: newContent }),
+        }).then(fetchNotes);
+    }
 }
 
-// Logout (for notes.html)
-if (document.getElementById('logoutBtn')) {
-    document.getElementById('logoutBtn').addEventListener('click', () => {
-        localStorage.removeItem('token'); // Remove token from storage
-        window.location.href = 'index.html'; // Redirect to login page
-    });
+// Delete a Note
+function deleteNote(id) {
+    fetch(`${API_BASE_URL}/api/notes/${id}`, {
+        method: 'DELETE',
+        headers: { 'Authorization': `Bearer ${token}` },
+    }).then(fetchNotes);
 }
