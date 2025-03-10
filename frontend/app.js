@@ -132,7 +132,7 @@ if (document.getElementById('createNoteForm')) {
 }
 
 // EDIT A NOTE FUNCTION (For notes.html)
-function editNote(id, oldTitle, oldContent) {
+function ModifyNote(id, oldTitle, oldContent) {
     const newTitle = prompt("Modify title:", oldTitle);
     const newContent = prompt("Modify content:", oldContent);
     if (newTitle && newContent) {
