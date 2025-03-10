@@ -10,7 +10,7 @@ const {
     createNote, 
     getNotesByUser, 
     deleteNote 
-} = require('./controllers/userController.js');  // Ensure correct path
+} = require('./controllers/userController');  // Ensure correct path
 
 
 // JWT secret
