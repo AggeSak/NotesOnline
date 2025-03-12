@@ -207,3 +207,14 @@ function deleteNote(id) {
         headers: { 'Authorization': `Bearer ${token}` },
     }).then(fetchNotes);
 }
+
+
+//Coming soon
+// CREATE A NOTE FUNCTION (For notes.html)
+if (document.getElementById('Comming Soon')) {
+    document.getElementById('Comming Soon').addEventListener('submit', async (e) => {
+        e.preventDefault();
+        console.log("Comming Soon");
+        
+    });
+}
