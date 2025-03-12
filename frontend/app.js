@@ -101,7 +101,7 @@ async function fetchNotes() {
                     <h4>${note.title}</h4>
                     <p>${note.content}</p>
                     <div class="note-actions">
-                        <button class="edit-btn" onclick="editNote('${note.id}', '${note.title}', '${note.content}')">✏️ Modify</button>
+                        <button class="edit-btn" onclick="ModifyNote('${note.id}', '${note.title}', '${note.content}')">✏️ Modify</button>
                         <button class="delete-btn" onclick="deleteNote('${note.id}')">🗑️ Delete</button>
                     </div>
                 </div>
