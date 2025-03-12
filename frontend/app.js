@@ -211,9 +211,7 @@ function deleteNote(id) {
 
 //Coming soon
 // CREATE A NOTE FUNCTION (For notes.html)
-if (document.getElementById('Coming Soon')) {
-    document.getElementById('Coming Soon').addEventListener('click', async (e) => {
-        console.log("Coming Soon");
-        
-    });
-}
+const sayHiButton = document.getElementById('Coming Soon');
+        sayHiButton.addEventListener('click', () => {
+            console.log('Wait');
+        });
