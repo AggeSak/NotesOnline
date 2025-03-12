@@ -80,6 +80,7 @@ if (document.getElementById('showNotesBtn')) {
 }
 
 // FETCH NOTES FUNCTION (For notes.html)
+// FETCH NOTES FUNCTION (For notes.html)
 async function fetchNotes() {
     const response = await fetch(`${API_BASE_URL}/api/notes`, {
         method: 'GET',
@@ -96,6 +97,7 @@ async function fetchNotes() {
         notes.forEach(note => {
             const li = document.createElement('li');
             li.className = "note";
+            li.draggable = true; // Make the note draggable
             li.innerHTML = `
                 <div class="note-paper">
                     <h4>${note.title}</h4>
@@ -108,9 +110,63 @@ async function fetchNotes() {
             `;
             notesList.appendChild(li);
         });
+
+        // Add drag-and-drop event listeners
+        makeNotesMovable();
     }
 }
 
+// Function to make notes movable
+function makeNotesMovable() {
+    const notesList = document.getElementById('notesList');
+    let draggedItem = null;
+
+    // Event listener for when dragging starts
+    notesList.addEventListener('dragstart', (e) => {
+        if (e.target.classList.contains('note')) {
+            draggedItem = e.target;
+            setTimeout(() => {
+                e.target.style.display = 'none'; // Hide the dragged item
+            }, 0);
+        }
+    });
+
+    // Event listener for when dragging over a note
+    notesList.addEventListener('dragover', (e) => {
+        e.preventDefault();
+        const afterElement = getDragAfterElement(notesList, e.clientY);
+        const currentItem = document.querySelector('.note.dragging');
+        if (afterElement == null) {
+            notesList.appendChild(draggedItem);
+        } else {
+            notesList.insertBefore(draggedItem, afterElement);
+        }
+    });
+
+    // Event listener for when dragging ends
+    notesList.addEventListener('dragend', (e) => {
+        if (e.target.classList.contains('note')) {
+            setTimeout(() => {
+                e.target.style.display = 'block'; // Show the dragged item again
+                draggedItem = null;
+            }, 0);
+        }
+    });
+
+    // Helper function to determine where to insert the dragged item
+    function getDragAfterElement(container, y) {
+        const draggableElements = [...container.querySelectorAll('.note:not(.dragging)')];
+        return draggableElements.reduce((closest, child) => {
+            const box = child.getBoundingClientRect();
+            const offset = y - box.top - box.height / 2;
+            if (offset < 0 && offset > closest.offset) {
+                return { offset: offset, element: child };
+            } else {
+                return closest;
+            }
+        }, { offset: Number.NEGATIVE_INFINITY }).element;
+    }
+}
 // CREATE A NOTE FUNCTION (For notes.html)
 if (document.getElementById('createNoteForm')) {
     document.getElementById('createNoteForm').addEventListener('submit', async (e) => {
