@@ -80,7 +80,7 @@ if (document.getElementById('showNotesBtn')) {
 }
 
 // FETCH NOTES FUNCTION (For notes.html)
-// FETCH NOTES FUNCTION (For notes.html)
+
 async function fetchNotes() {
     const response = await fetch(`${API_BASE_URL}/api/notes`, {
         method: 'GET',
@@ -211,10 +211,9 @@ function deleteNote(id) {
 
 //Coming soon
 // CREATE A NOTE FUNCTION (For notes.html)
-if (document.getElementById('Comming Soon')) {
-    document.getElementById('Comming Soon').addEventListener('submit', async (e) => {
-        e.preventDefault();
-        console.log("Comming Soon");
+if (document.getElementById('Coming Soon')) {
+    document.getElementById('Coming Soon').addEventListener('click', async (e) => {
+        console.log("Coming Soon");
         
     });
 }
