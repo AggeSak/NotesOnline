@@ -1,5 +1,5 @@
 ### **Project Description**
-A simple and interactive game built using **HTML**, **CSS**, and **JavaScript**. This project demonstrates basic games, including the creation of an interactive UI component, handling user input, and implementing game logic. The project includes games like Snake, Tic Tac Toe and a Calculator.
+This is a simple, full-stack Notes Application that allows users to add and view notes. The backend is powered by Express and a PostgreSQL database for data persistence, while the frontend is built using Vanilla JavaScript, HTML, and CSS. The application is deployed on Render , a cloud platform.
 
 ---
 
@@ -9,7 +9,7 @@ A simple and interactive game built using **HTML**, **CSS**, and **JavaScript**.
 - [Features](#features)
 - [Screenshots](#screenshots)
 - [Contributing](#contributing)
-- [License](#license)
+
 
 ---
 
@@ -21,16 +21,16 @@ To get this project up and running locally on your machine, follow the steps bel
    https://github.com/AggeSak/2DGames.git
 
 2. **Usage** <a name="usage"></a>
-To use this project navigade with cd command to the game of your choice and run the html file of your choice
+To use this project navigade with cd command on the frontend dataset and backend directory
 
 3. ### **Features** <a name="features"></a>
 
-4. ### **Images of the Games** <a name="screenshots"></a>
+4. ### **Images of the Website** <a name="screenshots"></a>
 
 <div style="display: flex; justify-content: space-around;">
-    <img src="Images/Calculator.png" alt="Calculator" width="15%" />
-    <img src="Images/tictactoe.png" alt="Tic Tac Toe" width="15%" />
-   <img src="Images/Snake.png" alt="Snake" width="15%" />
+    <img src="Images/Login.png" alt="Login" width="15%" />
+    <img src="Images/Sign_up.png" alt="Sign up" width="15%" />
+   <img src="Images/Notes.png" alt="Notes" width="15%" />
 </div>
 
 
