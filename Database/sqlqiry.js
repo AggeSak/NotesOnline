@@ -12,7 +12,7 @@ const client = new Client({
 });
 
 // SQL query to fetch all rows from the users table
-const sqlCode = 'SELECT * FROM users';
+const sqlCode = `SELECT * FROM users WHERE name = 'aggelos'`;
 
 // Connect to the database and execute the SQL query
 client.connect()
