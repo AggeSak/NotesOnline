@@ -30,6 +30,10 @@ app.get('/', (req, res) => {
     res.send('Welcome to the Notes App API!');
 });
 
+app.get('/Panos', (req, res) => {
+    res.send('Welcome to the best Notes App API!');
+});
+
 
 
 
