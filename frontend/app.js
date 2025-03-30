@@ -15,6 +15,12 @@ if (document.getElementById('loginBtn')) {
         const email = document.getElementById('loginEmail').value;
         const password = document.getElementById('loginPassword').value;
 
+        if (password.length <= 8){
+            alert("At least 8 letters")
+        }
+        else {
+        
+
         const response = await fetch(`${API_BASE_URL}/api/login`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
@@ -28,8 +34,10 @@ if (document.getElementById('loginBtn')) {
         } else {
             alert(data.error);
         }
-    });
+}});
 }
+
+
 
 // SIGNUP FUNCTION (For signup.html)
 if (document.getElementById('signupBtn')) {
