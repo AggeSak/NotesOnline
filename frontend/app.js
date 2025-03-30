@@ -110,20 +110,7 @@ async function fetchNotes() {
             li.draggable = true; // Make the note draggable
             li.innerHTML = `
 
-            .note-paper {
-    max-height: 150px; /* Set a max height */
-    overflow: hidden; /* Hide overflowing content */
-    text-overflow: ellipsis; /* Add "..." if text is cut off */
-    display: flex;
-    flex-direction: column;
-}
 
-.note-paper p {
-    flex-grow: 1; /* Make content area flexible */
-    overflow: hidden;
-    white-space: nowrap; /* Keep text in one line (remove if you want wrapping) */
-    text-overflow: ellipsis; /* Add "..." to long text */
-}
 
                 <div class="note-paper">
                     <h4>${note.title}</h4>
