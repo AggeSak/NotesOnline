@@ -15,10 +15,6 @@ if (document.getElementById('loginBtn')) {
         const email = document.getElementById('loginEmail').value;
         const password = document.getElementById('loginPassword').value;
 
-        if (password.length <= 8){
-            alert("At least 8 letters")
-        }
-        else {
         
 
         const response = await fetch(`${API_BASE_URL}/api/login`, {
@@ -34,7 +30,7 @@ if (document.getElementById('loginBtn')) {
         } else {
             alert(data.error);
         }
-}});
+});
 }
 
 
@@ -46,6 +42,12 @@ if (document.getElementById('signupBtn')) {
         const name = document.getElementById('signupName').value;
         const email = document.getElementById('signupEmail').value;
         const password = document.getElementById('signupPassword').value;
+
+        
+        if (password.length <= 8){
+            alert("At least 8 letters")
+        }
+        else {
 
         const response = await fetch(`${API_BASE_URL}/api/users`, {
             method: 'POST',
@@ -61,7 +63,7 @@ if (document.getElementById('signupBtn')) {
         } else {
             alert(data.error);
         }
-    });
+    }});
 }
 
 // LOGOUT FUNCTION (For notes.html)
