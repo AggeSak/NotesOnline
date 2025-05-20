@@ -1,7 +1,7 @@
 const { Client } = require('pg');
 
 // Connection string with SSL enabled
-const connectionString = 'postgresql://notes_3hr9_user:PAF2ail5FOQZ2nZ5aiCGinGE0Kj08X7S@dpg-cv4ssvt6l47c73ar8e4g-a.oregon-postgres.render.com/notes_3hr9';
+const connectionString = 'postgresql://db_294o_user:CjFPkh5QD6E88foyTq1tbusLWmynpnc1@dpg-d0memo3e5dus738f8r8g-a/db_294o';
 
 // Create a new client with SSL configuration
 const client = new Client({
