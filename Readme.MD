@@ -18,7 +18,7 @@ To get this project up and running locally on your machine, follow the steps bel
 
 1. **Clone the repository** to your local machine using Git:
    ```bash
-   https://github.com/AggeSak/2DGames.git
+   https://github.com/AggeSak/NotesOnline.git
 
 2. **Usage** <a name="usage"></a>
 To use this project navigade with cd command on the frontend dataset and backend directory
