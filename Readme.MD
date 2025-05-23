@@ -1,5 +1,5 @@
 ### **Project Description**
-This is a simple, full-stack Notes Application that allows users to add and view notes. The backend is powered by Express and a PostgreSQL database for data persistence, while the frontend is built using Vanilla JavaScript, HTML, and CSS. The application is deployed on Render , a cloud platform.
+This is a simple, full-stack Notes Application that allows users to add and view notes. The project is experimental and just for learnig purposes.The backend is powered by Express and a PostgreSQL database for data persistence, while the frontend is built using Vanilla JavaScript, HTML, and CSS. The application is deployed on Render , a cloud platform.
 
 ---
 
