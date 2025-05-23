@@ -28,9 +28,8 @@ To use this project navigade with cd command on the frontend dataset and backend
 4. ### **Images of the Website** <a name="screenshots"></a>
 
 <div style="display: flex; justify-content: space-around;">
-    <img src="Images/Login.png" alt="Login" width="15%" />
-    <img src="Images/Sign_up.png" alt="Sign up" width="15%" />
-   <img src="Images/Notes.png" alt="Notes" width="15%" />
+    <img src="Images/login_imagr.png" alt="Login" width="15%" />
+    <img src="Images/Signup_image.png" alt="Sign up" width="15%" />
 </div>
 
 
