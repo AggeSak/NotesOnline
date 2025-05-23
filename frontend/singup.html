@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>📝 Sign Up - Notes App 📒</title>
+    <link href="https://fonts.googleapis.com/css2?family=Handlee&family=Raleway:wght@300;400;700&display=swap" rel="stylesheet">
+    <style>
+        /* General Styles */
+        body {
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f4f1de;
+            font-family: 'Raleway', sans-serif;
+        }
+
+        /* Background with Picasso-style floating papers */
+        .background {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+
+        /* Notebook Container */
+        .notebook {
+            background: #fff8e1;
+            width: 350px;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.2);
+            text-align: center;
+            border: 3px dashed #d2691e;
+            position: relative;
+            z-index: 2;
+        }
+
+        /* Paper Sheet */
+        .paper {
+            background: #fffcf2;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: inset 0px 0px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Form Inputs */
+        input {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #d4a373;
+            border-radius: 5px;
+            font-size: 16px;
+            font-family: 'Handlee', cursive;
+            background-color: #fff;
+        }
+
+        /* Sign Up Button */
+        button {
+            width: 100%;
+            padding: 10px;
+            background: #ff6600;
+            border: none;
+            color: white;
+            font-size: 18px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        button:hover {
+            background: #e64a19;
+        }
+
+        /* Floating Paper Elements (Picasso-Inspired) */
+        .paper-piece {
+            position: absolute;
+            background: rgba(255, 255, 255, 0.8);
+            box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+            transform: rotate(var(--rotation, 15deg));
+        }
+
+        .small {
+            width: 60px;
+            height: 40px;
+            top: 10%;
+            left: 15%;
+            transform: rotate(-15deg);
+        }
+
+        .medium {
+            width: 80px;
+            height: 50px;
+            top: 60%;
+            right: 20%;
+            transform: rotate(10deg);
+        }
+
+        .large {
+            width: 120px;
+            height: 70px;
+            bottom: 20%;
+            left: 50%;
+            transform: rotate(-10deg);
+        }
+
+        /* Login Link */
+        p {
+            font-size: 14px;
+            margin-top: 10px;
+        }
+
+        p a {
+            text-decoration: none;
+            color: #ff6600;
+            font-weight: bold;
+        }
+
+        p a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="background">
+        <div class="notebook">
+            <div class="paper">
+                <h2>Sign Up</h2>
+                <input type="text" id="signupName" placeholder="Name" required />
+                <input type="email" id="signupEmail" placeholder="Email" required />
+                <input type="password" id="signupPassword" placeholder="Password" required />
+                <button id="signupBtn">Sign Up</button>
+                <p>Already have an account? <a href="index.html">Login</a></p>
+            </div>
+        </div>
+        
+        <!-- Abstract Picasso-Inspired Floating Papers -->
+        <div class="paper-piece"></div>
+        <div class="paper-piece small"></div>
+        <div class="paper-piece medium"></div>
+        <div class="paper-piece large"></div>
+    </div>
+
+    
+    <script src="app.js"></script>
+    
+</body>
+
+</html>

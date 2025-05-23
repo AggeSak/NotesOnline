@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>📝 Your Notes - Notes App 📒</title>
+    <style>
+        /* Google Font */
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap');
+
+        /* General Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            padding: 20px;
+        }
+
+        /* Notes Section */
+        #notesSection {
+            max-height: 550px;
+            overflow-y: auto; 
+            background: white;
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            max-width: 500px;
+            width: 100%;
+            transition: all 0.3s ease-in-out;
+        }
+
+        /* Heading */
+        h3 {
+            margin-bottom: 15px;
+            color: #333;
+            font-weight: 600;
+        }
+
+        /* Show Notes Button */
+        #showNotesBtn {
+            background: #48c78e;
+        }
+
+        #showNotesBtn:hover {
+            background: #3aa87c;
+        }
+
+        /* Notes List - Initially Hidden */
+        #notesList {
+          list-style: none;
+          margin: 15px 0;
+          padding: 10px;
+          display: none;
+          max-height: 200px; /* Adjust this value as needed */
+          overflow-y: auto;
+        }
+
+
+        /* Paper-style Notes */
+        .note {
+            background: #fffbeb;
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 8px;
+            box-shadow: 3px 3px 8px rgba(0, 0, 0, 0.1);
+            text-align: left;
+            font-style: italic;
+            position: relative;
+        }
+
+        /* Modify & Delete Buttons */
+        .note-actions {
+            display: flex;
+            justify-content: flex-end;
+            gap: 10px;
+            margin-top: 5px;
+        }
+
+        .edit-btn, .delete-btn {
+            border: none;
+            padding: 5px 10px;
+            font-size: 14px;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+
+        .edit-btn {
+            background: #f7b731;
+            color: white;
+        }
+
+        .edit-btn:hover {
+            background: #e09b2d;
+        }
+
+        .delete-btn {
+            background: #eb4d4b;
+            color: white;
+        }
+
+        .delete-btn:hover {
+            background: #c0392b;
+        }
+
+        /* Form Inputs */
+        input, textarea {
+            width: 100%;
+            padding: 12px;
+            margin: 10px 0;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 16px;
+            transition: all 0.3s ease-in-out;
+        }
+
+        textarea {
+            height: 100px;
+            resize: none;
+        }
+
+        /* Buttons */
+        button {
+            width: 100%;
+            padding: 14px;
+            background: #667eea;
+            border: none;
+            color: white;
+            font-size: 16px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background 0.3s ease-in-out;
+            margin-top: 10px;
+        }
+
+        button:hover {
+            background: #5a67d8;
+        }
+
+        /* Logout Button */
+        #logoutBtn {
+            background: #ff4b5c;
+        }
+
+        #logoutBtn:hover {
+            background: #e84150;
+        }
+    </style>
+</head>
+<body>
+    <div id="notesSection">
+        <h3>Your Notes</h3>
+
+        <!-- Show Notes Button -->
+        <button id="showNotesBtn">Show Old Notes</button>
+        
+
+        <!-- Notes List (Hidden Initially) -->
+        <ul id="notesList"></ul>
+
+        <!-- Create Note Form -->
+        <form id="createNoteForm">
+            <input type="text" id="noteTitle" placeholder="Title" required />
+            <textarea id="noteContent" placeholder="Content" required></textarea>
+            <button type="submit">Create Note</button>
+        </form>
+
+        <!-- Logout Button -->
+        <button id="logoutBtn">Logout</button>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>

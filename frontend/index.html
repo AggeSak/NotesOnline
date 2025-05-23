@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>✨ Login - Notes App ✨</title>
+    <style>
+        /* Google Font */
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap');
+
+        /* General Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            padding: 20px;
+        }
+
+        /* Login Form Container */
+        #loginForm {
+            background: white;
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            max-width: 400px;
+            width: 100%;
+        }
+
+        /* Heading */
+        h2 {
+            margin-bottom: 20px;
+            color: #333;
+            font-weight: 600;
+        }
+
+        /* Input Fields */
+        input {
+            width: 100%;
+            padding: 12px;
+            margin: 10px 0;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 16px;
+            transition: all 0.3s ease-in-out;
+        }
+
+        input:focus {
+            border-color: #667eea;
+            outline: none;
+            box-shadow: 0 0 8px rgba(102, 126, 234, 0.5);
+        }
+
+        /* Button */
+        button {
+            width: 100%;
+            padding: 14px;
+            background: #667eea;
+            border: none;
+            color: white;
+            font-size: 16px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background 0.3s ease-in-out;
+        }
+
+        button:hover {
+            background: #5a67d8;
+        }
+
+        /* Sign Up Link */
+        p {
+            margin-top: 15px;
+            font-size: 14px;
+        }
+
+        p a {
+            color: #667eea;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        p a:hover {
+            text-decoration: underline;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 480px) {
+            #loginForm {
+                padding: 1.5rem;
+            }
+            h2 {
+                font-size: 20px;
+            }
+            input, button {
+                font-size: 14px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div id="loginForm">
+        <h2>Login</h2>
+        <input type="email" id="loginEmail" placeholder="Email" required />
+        <input type="password" id="loginPassword" placeholder="Password" required /> 
+        <button id="loginBtn">Login</button>
+        <p>Don't have an account? <a href="singup.html">Sign up</a></p>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>

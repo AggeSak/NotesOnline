@@ -48,6 +48,8 @@ app.put('/api/notes/:id', ModifyNote);
 
 
 
+// Catch-all route handler
+
 // Start the server
 // Inside server.js, update your listen code:
 const PORT = process.env.PORT || 10000;
